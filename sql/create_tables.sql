@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS public.grants (
 	due_date DATE,
 	-- Eligibility Info
 	minimum_gpa REAL,
+	academic_year TEXT,
 	major_requirement TEXT,
 	financial_need BOOLEAN,
 	residency TEXT,
