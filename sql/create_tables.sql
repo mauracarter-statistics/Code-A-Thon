@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS public.students (
 	department TEXT,
 	academic_year TEXT,
 	enrollment_status TEXT,
-	gpa DEMICAL(3, 2),
+	gpa DECIMAL(3, 2),
 	-- Financial Info
 	residency TEXT,
 	financial_class TEXT,
