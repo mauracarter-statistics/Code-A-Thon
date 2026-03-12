@@ -1,0 +1,22 @@
+1- front end
+Create an admissions form; upon hitting submit, the queries run
+We need a drop-down to prefill fake student data for the judges to then hit submit themselves
+by default, set to OPT OUT instead of OPT IN
+
+2- results page
+Print results of admissions data entry to screen
+Say that we've applied on their behalf to A, B, and C grants; display amounts the student stands to gain if grant is approved
+Say that we've found X, Y, and Z grants but they have work to do to complete some manual component and they stand to gain so much in grant money if approved
+
+3- We need to emphasize that for this demo, this product/view is limited to enable test use by the judges. The whole purpose of the project is that this will be handled automatically via backend orchestrations. So we also include a view of the full code running with logs printed to the screen so it can see that in a matter of seconds we've auto-applied X students and sent out notices to another batch of students on specific grants.
+
+4- finish the rest of david's planned out code
+-- fillUpForm(): this will be for the drop-down menu to auto-fill the admissions page
+-- checkFormEmptiness(): not needed at this moment
+-- notifyMonitoring(): this can be used to display grant application summary to the screen (note 2)
+-- emailReminder(): not needed at this moment
+
+
+5- should we email students who have not opted in to say "hey, you just lost out on these opportunities." or should we email them instead?
+
+6- Can Zoe work on testing and building the PowerPoint slides?
