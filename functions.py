@@ -8,7 +8,7 @@ def loadGrantInformation():
     with all None values removed.
   """
 
-  with open("seed_data.json", "r", encoding="UTF-8") as grantFile:
+  with open("mock_data/seed_data.json", "r", encoding="UTF-8") as grantFile:
     data = json.load(grantFile)
   
   for row in data["grants"]:
@@ -74,5 +74,6 @@ def emailRemainder():
 def main():
   loadGrantInformation()
   establishForm()
+
 
 main()
