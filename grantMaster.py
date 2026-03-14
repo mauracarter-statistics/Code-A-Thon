@@ -2,15 +2,6 @@ import json
 import pandas as pd
 import streamlit as st
 
-# https://docs.streamlit.io/develop/api-reference/configuration/st.set_page_config
-st.set_page_config(
-    page_title="grantMaster",
-    page_icon=":dollar:",
-    layout="wide",
-    initial_sidebar_state="auto",
-    menu_items=None
-    )
-
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
 @st.cache_data
 def loadSeedData():
@@ -125,4 +116,26 @@ def searchGrants(student, grants):
 
 # main()
 
+def showWelcome():
+    st.title("grantMaster")
+    st.write("grantMaster compares your academoc profile against our database of grants. When possible, we'll even apply on your behalf!")
+
 students, grants = loadSeedData()
+
+# https://docs.streamlit.io/develop/api-reference/configuration/st.set_page_config
+st.set_page_config(
+    page_title="grantMaster",
+    page_icon=":dollar:",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
+    )
+
+# https://youtu.be/92jUAXBmZyU?list=TLGGYqrRVqMdT0wxNDAzMjAyNg
+if "page" not in st.session_state:
+    st.session_state["page"] = "welcome"
+
+# https://docs.streamlit.io/develop/api-reference/caching-and-state/st.session_state
+page = st.session_state.page
+if page == "welcome":
+    showWelcome()
