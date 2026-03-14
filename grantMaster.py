@@ -2,6 +2,9 @@ import json
 import pandas as pd
 import streamlit as st
 
+# Full Streamlit doc:
+# https://docs.streamlit.io/
+
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
 @st.cache_data
 def loadSeedData():
@@ -116,9 +119,26 @@ def searchGrants(student, grants):
 
 # main()
 
-def showWelcome():
+def showWelcomePage():
     st.title("grantMaster")
     st.write("grantMaster compares your academoc profile against our database of grants. When possible, we'll even apply on your behalf!")
+    st.divider()
+    if st.button("Get Started", width="content"):
+        st.session_state.page = "form"
+        st.rerun()
+
+def showFormPage():
+    st.title("Student Profiles")
+    studentOptions = (students["first_name"] + " " + students["last_name"]).tolist()
+    # selectbox info: https://docs.streamlit.io/develop/api-reference/widgets/st.selectbox
+    selectedStudent = st.selectbox(
+        label="Select a Student",
+        options=studentOptions,
+        index=None,
+        placeholder=None,
+        accept_new_options=False,
+        width="stretch",
+        )
 
 students, grants = loadSeedData()
 
@@ -138,4 +158,6 @@ if "page" not in st.session_state:
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.session_state
 page = st.session_state.page
 if page == "welcome":
-    showWelcome()
+    showWelcomePage()
+elif page == "form":
+    showFormPage()
