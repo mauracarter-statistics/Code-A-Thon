@@ -1,26 +1,6 @@
 import json
 import pandas as pd
 
-# Define CONSTANT(S) and variable(s)
-
-"""
-Map of grants table's criterion fields to the students table with filtering logic.
-Used to dynamically construct a query for each grant.
-Any grant criterion that is null/false are not accumulated into the dynamic query.
-"""
-CRITERION_MAPPING = {
-    "minimum_gpa": "gpa >= {value}",
-    "required_academic_year": "academic_year == '{value}'",
-    "major_requirement":      "major == '{value}'",
-    "residency":              "residency == '{value}'",
-    "race":                   "race == '{value}'",
-    "ethnicity":              "ethnicity == '{value}'",
-    "gender":                 "gender == '{value}'",
-    "first_gen":              "first_gen == True",
-    "disability":             "disability == True",
-    "military":               "military == True",
-}
-
 def loadSeedData():
     """
     Load student and grant JSON files into separate DataFrames.
@@ -73,13 +53,31 @@ def selectStudent(students_df):
 def constructQuery(grant):
     """
     Takes a single grant row from the grants_df and builds a pandas .query() string...
-    by iterating through the CRITERION_MAPPING dictionary.
+    by iterating through the criterionMap dictionary.
     Returns the query string, or None if no the grant has no criteria.
     """
 
+    """
+    Map of grants table's criterion fields to the students table with filtering logic.
+    Used to dynamically construct a query for each grant.
+    Any grant criterion that is null/false are not accumulated into the dynamic query.
+    """
+    criterionMap = {
+        "minimum_gpa": "gpa >= {value}",
+        "required_academic_year": "academic_year == '{value}'",
+        "major_requirement":      "major == '{value}'",
+        "residency":              "residency == '{value}'",
+        "race":                   "race == '{value}'",
+        "ethnicity":              "ethnicity == '{value}'",
+        "gender":                 "gender == '{value}'",
+        "first_gen":              "first_gen == True",
+        "disability":             "disability == True",
+        "military":               "military == True",
+    }
+
     conditions = []
 
-    for grant_field, query_template in CRITERION_MAPPING.items():
+    for grant_field, query_template in criterionMap.items():
         value = grant.get(grant_field)
 
         # Skip if null or False
@@ -103,7 +101,7 @@ def searchGrants(student, grants):
     Obtains a query string from constructQuery() and applies it to the student_df.
     Returns a filtered DataFrame of grants containing only eligible grants.
     """
-
+    
     qualified = []
 
     for index, grant in grants.iterrows():
