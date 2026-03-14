@@ -1,5 +1,15 @@
 import json
 import pandas as pd
+import streamlit as st
+
+# https://docs.streamlit.io/develop/api-reference/configuration/st.set_page_config
+st.set_page_config(
+    page_title="grantMaster",
+    page_icon=":dollar:",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
+    )
 
 def loadSeedData():
     """
