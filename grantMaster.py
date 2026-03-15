@@ -5,6 +5,14 @@ import streamlit as st
 # Full Streamlit doc:
 # https://docs.streamlit.io/
 
+# Play a song? https://docs.streamlit.io/develop/api-reference/media/st.audio
+st.audio(
+    data="https://upload.wikimedia.org/wikipedia/commons/8/80/Stellardrone_-_Red_Giant.ogg",
+    start_time=0,
+    loop=True,
+    autoplay=True
+)
+
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
 @st.cache_data
 def loadSeedData():
@@ -20,30 +28,6 @@ def loadSeedData():
     grantsData = pd.DataFrame(data["grants"])
 
     return studentsData, grantsData
-
-# def selectStudent(students_df):
-#     """
-#     Prompts user to select a student by index.
-#     Counts the rows in the students_df to test user entry.
-#     Returns a single-row DataFrame for the chosen student/index.
-#     """
-
-#     row_count = len(students_df)
-#     print(f"There are {row_count} students available.")
-
-#     while True:
-#         try:
-#             userInput = int(input(f"Enter a student index (0 to {row_count - 1}): "))
-#             if 0 <= userInput <= row_count - 1:
-#                 break
-#             else:
-#                 print(f"Please enter a number between 0 and {row_count - 1}.")
-#         except ValueError:
-#             print(f"Invalid input. Please enter a whole number between 0 and {row_count - 1}")
-    
-#     studentDict = students_df.iloc[[userInput]]
-
-#     return studentDict
 
 def constructQuery(grant):
     """
@@ -112,16 +96,15 @@ def searchGrants(student, grants):
 
     return grants.loc[qualified]
 
-# def main():
-#     students_df, grants_df = loadSeedData()
-#     student_df = selectStudent(students_df)
-#     searchGrants(student_df, grants_df)
-
-# main()
-
 def showWelcomePage():
     # Display the "Welcome" page
-    st.title("grantMaster")
+    # Title info: https://docs.streamlit.io/develop/api-reference/text/st.title
+    st.title(
+        body="grantMaster",
+        anchor=None,
+        width="content",
+        text_alignment="left"
+        )
 
     st.divider()
 
@@ -130,16 +113,24 @@ def showWelcomePage():
     st.write("grantMaster will use student registration data to automatically search for grants that a student may be eligible for. When possible, it will apply on their behalf.")
     st.write("Nothing extra, aside from opting into the program when registering for classes, will be asked of students. The data used to determine eligibility is data they already provide to their college when registering.")
     st.write("grantMaster is designed to run automatically in the background. Grants will be searched for all students before the start of a new semester, when a new grant is added to the database, or when a student's registration data changes (such as declaring a new major).")
-    st.write("What you'll see on the next page is a simulation of a student's academic profile being matched against available grants, a window into what grantMaster will do automatically, at scale, and without any manual involvement from the student.")
+    st.write("What you'll see on the following pages is a simulation of a student's academic profile being matched against available grants, a window into what grantMaster will do automatically, at scale, and without any manual involvement from the student.")
     st.divider()
     # button info: https://docs.streamlit.io/develop/api-reference/widgets/st.button
-    if st.button("Get Started", width="content"):
+    if st.button(
+        label="Get Started",
+        width="content"
+        ):
         st.session_state.page = "form"
         st.rerun()
 
 def showFormPage():
     # Display the "Form" page
-    st.title("Student Profiles")
+    st.title(
+        body="Student Profiles",
+        anchor=None,
+        width="content",
+        text_alignment="left"
+        )
     # Create a drop-down list of students in the database
     studentOptions = (students["first_name"] + " " + students["last_name"]).tolist()
     # selectbox info: https://docs.streamlit.io/develop/api-reference/widgets/st.selectbox
@@ -164,17 +155,21 @@ def showFormPage():
 
         st.divider()
         
-        st.subheader(body="Personal Information",
-                     width="content",
-                     text_alignment="left")
+        st.subheader(
+            body="Personal Information",
+            width="content",
+            text_alignment="left"
+            )
         st.write(f"**Name:** {studentDict.get('first_name')} {studentDict.get('middle_name', '') if not 'None' else ""} {studentDict.get('last_name')}")
         st.write(f"**Email:** {studentDict.get('email', '—')}")
         st.write(f"**Phone:** {studentDict.get('phone_number', '—')}")
         st.write(f"**Address:** {studentDict.get('street_address', '—')}, {studentDict.get('city', '—')}, {studentDict.get('state', '—')} {studentDict.get('zip_code', '—')}")
 
-        st.subheader(body="Academic Information",
-                     width="content",
-                     text_alignment="left")
+        st.subheader(
+            body="Academic Information",
+            width="content",
+            text_alignment="left"
+            )
         st.write(f"**Major:** {studentDict.get('major', '—')}")
         st.write(f"**Concentration:** {studentDict.get('concentration', '—')}")
         st.write(f"**Year:** {studentDict.get('academic_year', '—')}")
@@ -182,9 +177,11 @@ def showFormPage():
         st.write(f"**Enrollment:** {studentDict.get('enrollment_status', '—')}")
         st.write(f"**Residency:** {studentDict.get('residency', '—')}")
 
-        st.subheader(body="Demographic Information",
-                     width="content",
-                     text_alignment="left")
+        st.subheader(
+            body="Demographic Information",
+            width="content",
+            text_alignment="left"
+            )
         st.write(f"**Financial Class:** {studentDict.get('financial_class', '—')}")
         st.write(f"**Race:** {studentDict.get('race', '—')}")
         st.write(f"**Ethnicity:** {studentDict.get('ethnicity', '—')}")
@@ -193,7 +190,11 @@ def showFormPage():
         st.write(f"**Disability:** {'Yes' if studentDict.get('disability') else 'No'}")
         st.write(f"**Military:** {'Yes' if studentDict.get('military') else 'No'}")
 
-        st.subheader(body="grantMaster Consent")
+        st.subheader(
+            body="grantMaster Consent",
+            width="content",
+            text_alignment="left"
+            )
         # Consent needs to be stored in a variable, I need to test it so it so I can...
         # display the right messages to the screen depending on what's in the variable
         opted_in = studentDict.get("opted_in")
@@ -202,13 +203,23 @@ def showFormPage():
         st.divider()
 
         # button info: https://docs.streamlit.io/develop/api-reference/widgets/st.button
-        if st.button("Search for Grants", width="content"):
+        if st.button(
+            label="Search for Grants",
+            width="content"
+            ):
             results = searchGrants(student, grants)
             st.session_state.match_results = results
             st.session_state.opted_in = opted_in
             st.session_state.student_name = selectedStudent
             st.session_state.page = "results"
             st.rerun()
+        if st.button(
+            label="Return Home",
+            width="content"
+            ):
+            st.session_state.page = "welcome"
+            st.rerun()
+
     except IndexError:
         pass
 
@@ -217,8 +228,73 @@ def showResultsPage():
     results = st.session_state.match_results
     name = st.session_state.student_name
 
-    # I'll work on this tomorrow...
-    # the variables above are what I should need to display the grant search results...
+    st.title(
+        body=f"Results for {name}",
+        anchor=None,
+        width="content",
+        text_alignment="left"
+        )
+    
+    st.divider()
+
+    if results is None:
+        st.write("Unfortunately, no grants were found that matched to your profile. But don't worry, we'll keep an eye out for you.")
+    elif not opted_in:
+        st.write("You have not opted into grantMatch. If you'd like to receive grant eligibility information, please contact your college's Registrar to opt-in.")
+    else:
+        grantCount = len(results)
+        autoApply = results[results["auto_apply"] == True]
+        manualApply = results[results["auto_apply"] == False]
+
+        if grantCount == 1:
+            st.write(f"{grantCount} grant has matched your profile.")
+        else:
+            st.write(f"{grantCount} grants have matched your profile.")
+        
+        if not autoApply.empty:
+            counter = 0
+            st.subheader(
+                body="Auto-Applied Grants",
+                width="content",
+                text_alignment="left"
+                )
+            for index, grant in autoApply.iterrows():
+                counter += 1
+                st.write(f"{counter}. {grant['grant_name']} from the {grant['grantor']} for ${grant['amount']:,.0f}")
+
+        if not manualApply.empty:
+            counter = 0
+            st.subheader(
+                body="Grant Opportunities",
+                width="content",
+                text_alignment="left"
+                )
+            for index, grant in manualApply.iterrows():
+                counter += 1
+                st.write(
+                    f"{counter}. {grant['grant_name']} from the {grant['grantor']} for ${grant['amount']:,.0f}"
+                    "\n\n\t"
+                    f"Requires from you: {grant['manual_component']}"
+                    "\n\n\n\t"
+                    f"Apply at: {grant['app_url']}"
+                    f"\n\n\n"
+                    )
+
+    st.divider()
+
+    if st.button(
+        label="Check a Different Student",
+        width="content"
+        ):
+        st.session_state.page = "form"
+        st.rerun()
+
+    if st.button(
+        label="Return Home",
+        width="content"
+        ):
+        st.session_state.page = "welcome"
+        st.rerun()
 
 students, grants = loadSeedData()
 
