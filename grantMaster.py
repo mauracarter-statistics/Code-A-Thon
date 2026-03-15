@@ -121,7 +121,12 @@ def searchGrants(student, grants):
 
 def showWelcomePage():
     st.title("grantMaster")
-    st.write("grantMaster compares your academoc profile against our database of grants. When possible, we'll even apply on your behalf!")
+    st.write("Each year, millions of dollars in college grants go unclaimed. This isn't because students don't qualify, but because they never hear about the opportunities.")
+    st.write("That's where grantMaster hopes to step in.")
+    st.write("grantMaster will use student registration data to automatically search for grants that a student may be eligible for. When possible, it will apply on their behalf.")
+    st.write("Nothing extra -- aside from opting into the program when registering for classes -- will be asked of students. The data used to determine eligibility is data they already provide to their college when registering.")
+    st.write("grantMaster is designed to run automatically in the background. Grants will be searched for all students before the start of a new semester, when a new grant is added to the database, or when a student's registration data changes (such as declaring a new major).")
+    st.write("What you'll see on the next page is a simulation of a student's academic profile being matched against available grants, a window into what grantMaster will do automatically, at scale, and without any manual involvement from the student.")
     st.divider()
     if st.button("Get Started", width="content"):
         st.session_state.page = "form"
@@ -135,7 +140,7 @@ def showFormPage():
         label="Select a Student",
         options=studentOptions,
         index=None,
-        placeholder=None,
+        placeholder="Select a student",
         accept_new_options=False,
         width="stretch",
         )
