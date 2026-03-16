@@ -240,7 +240,7 @@ def showResultsPage():
     if results is None:
         st.write("Unfortunately, no grants were found that matched to your profile. But don't worry, we'll keep an eye out for you.")
     elif not opted_in:
-        st.write("You have not opted into grantMatch. If you'd like to receive grant eligibility information, please contact your college's Registrar to opt-in.")
+        st.write("You have not opted into grantMaster. If you'd like to receive grant eligibility information, please contact your college's Registrar to opt-in.")
     else:
         grantCount = len(results)
         autoApply = results[results["auto_apply"] == True]
