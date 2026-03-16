@@ -1,3 +1,4 @@
+
 import json
 import pandas as pd
 import streamlit as st
@@ -5,12 +6,20 @@ import streamlit as st
 # Full Streamlit doc:
 # https://docs.streamlit.io/
 
-# Play a song? https://docs.streamlit.io/develop/api-reference/media/st.audio
+# Caption: https://docs.streamlit.io/develop/api-reference/text/st.caption
+st.caption(
+    body="Rhodes Deep by Ronald Jenkees (w/ permission from artist)",
+    width="stretch",
+    text_alignment="right"
+)
+# Play music: https://docs.streamlit.io/develop/api-reference/media/st.audio
 st.audio(
-    data="https://upload.wikimedia.org/wikipedia/commons/8/80/Stellardrone_-_Red_Giant.ogg",
+    data="audio\Ronald Jenkees - Rhodes Deep - 01 Rhodes Deep.wav",
+    format="audio/wav",
     start_time=0,
     loop=True,
-    autoplay=True
+    autoplay=True,
+    width="stretch"
 )
 
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
@@ -111,9 +120,10 @@ def showWelcomePage():
     st.write("Each year, millions of dollars in college grants go unclaimed. This isn't because students don't qualify, but because they never hear about the opportunities.")
     st.write("That's where grantMaster hopes to step in.")
     st.write("grantMaster will use student registration data to automatically search for grants that a student may be eligible for. When possible, it will apply on their behalf.")
+    st.write("To use grantMaster, a college signs a data sharing agreement that details how student data is handled. The college also sets up a connection between their existing registration system and grantMaster so that data can be shared.")
     st.write("Nothing extra, aside from opting into the program when registering for classes, will be asked of students. The data used to determine eligibility is data they already provide to their college when registering.")
     st.write("grantMaster is designed to run automatically in the background. Grants will be searched for all students before the start of a new semester, when a new grant is added to the database, or when a student's registration data changes (such as declaring a new major).")
-    st.write("What you'll see on the following pages is a simulation of a student's academic profile being matched against available grants, a window into what grantMaster will do automatically, at scale, and without any manual involvement from the student.")
+    st.write("What you'll see on the following pages is a simulation of a student's academic profile being matched against available grants, a look into what grantMaster will do automatically, at scale, and without any manual involvement from the student.")
     st.divider()
     # button info: https://docs.streamlit.io/develop/api-reference/widgets/st.button
     if st.button(
@@ -138,7 +148,7 @@ def showFormPage():
         label="Select a Student",
         options=studentOptions,
         index=None,
-        placeholder="Select a student",
+        placeholder="",
         accept_new_options=False,
         width="stretch",
         )
@@ -221,7 +231,13 @@ def showFormPage():
             st.rerun()
 
     except IndexError:
-        pass
+        st.divider()
+        if st.button(
+            label="Return Home",
+            width="content"
+            ):
+            st.session_state.page = "welcome"
+            st.rerun()
 
 def showResultsPage():
     opted_in = st.session_state.opted_in
