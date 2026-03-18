@@ -1,26 +1,16 @@
 
 import json
 import pandas as pd
+import smtplib
 import streamlit as st
+
+###########
+# FUNCTIONS
+###########
+
 
 # Full Streamlit doc:
 # https://docs.streamlit.io/
-
-# Caption: https://docs.streamlit.io/develop/api-reference/text/st.caption
-st.caption(
-    body="Rhodes Deep by Ronald Jenkees (w/ permission from artist)",
-    width="stretch",
-    text_alignment="right"
-)
-# Play music: https://docs.streamlit.io/develop/api-reference/media/st.audio
-st.audio(
-    data="audio\\Ronald Jenkees - Rhodes Deep - 01 Rhodes Deep.wav",
-    format="audio/wav",
-    start_time=0,
-    loop=True,
-    autoplay=True,
-    width="stretch"
-)
 
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
 @st.cache_data
@@ -153,7 +143,7 @@ def showFormPage():
         width="stretch",
         )
 
-    # Due to how I've set up the selectbox object, with "Select a student" being...
+    # Due to how I've set up the selectbox object, with "" being...
     # the placeholder string in the dropdown box, "Select a student" will result...
     # in an IndexError as it's not in the studentOptions list and is therefore...
     # out of bounds. I'm wrapping the code in a try/except block to avoid displaying...
@@ -244,6 +234,14 @@ def showResultsPage():
     results = st.session_state.match_results
     name = st.session_state.student_name
 
+    # Email tutorial: https://www.youtube.com/watch?v=ueqZ7RL8zxM
+    senderEmail = "codeminers4tw@gmail.com"
+    appPassword = "ugzw mlqp plkt ejqt"
+    recipientEmail = "grantMaster_Test@guerrillamail.com"
+    defaultText = f"Good news from grantMaster, {name}!\n\n"
+    text = defaultText
+    inbox = "https://www.guerrillamail.com/inbox/grantMaster_Test"
+
     st.title(
         body=f"Results for {name}",
         anchor=None,
@@ -269,34 +267,57 @@ def showResultsPage():
         
         if not autoApply.empty:
             counter = 0
+            header = "Auto-Applied Grants"
             st.subheader(
-                body="Auto-Applied Grants",
+                body=header,
                 width="content",
                 text_alignment="left"
                 )
+            text += f"{header}\n"
             for index, grant in autoApply.iterrows():
                 counter += 1
-                st.write(f"{counter}. {grant['grant_name']} from the {grant['grantor']} for ${grant['amount']:,.0f}")
+                message = f"{counter}. {grant['grant_name']} from the {grant['grantor']} for ${grant['amount']:,.0f}" 
+                st.write(message)
+                text += f"{message}\n"
+            text += "\n"
 
         if not manualApply.empty:
             counter = 0
+            header = "Grant Opportunities"
             st.subheader(
-                body="Grant Opportunities",
+                body=header,
                 width="content",
                 text_alignment="left"
                 )
+            text += f"{header}\n"
             for index, grant in manualApply.iterrows():
                 counter += 1
-                st.write(
+                message = (
                     f"{counter}. {grant['grant_name']} from the {grant['grantor']} for ${grant['amount']:,.0f}"
-                    "\n\n\t"
-                    f"Requires from you: {grant['manual_component']}"
-                    "\n\n\n\t"
-                    f"Apply at: {grant['app_url']}"
-                    f"\n\n\n"
+                    + "\n\n\t"
+                    + f"Requires from you: {grant['manual_component']}"
+                    + "\n\n\n\t"+ f"Apply at: {grant['app_url']}"
+                    + f"\n\n\n"
                     )
+                st.write(message)
+                text += f"{message}"
 
     st.divider()
+
+    # Send email
+    if text is not defaultText:
+        text += "\nGood luck!\n\nSigned,\nThe grantMaster Team"
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login(senderEmail, appPassword)
+            server.sendmail(senderEmail, recipientEmail, text)
+        
+        # link button: https://docs.streamlit.io/develop/api-reference/widgets/st.link_button
+        st.link_button(
+        label="View Demo Inbox*",
+        url=inbox,
+        width="content"
+        )
 
     if st.button(
         label="Check a Different Student",
@@ -311,6 +332,22 @@ def showResultsPage():
         ):
         st.session_state.page = "welcome"
         st.rerun()
+    
+    if text is not defaultText:
+        st.caption(
+        body="*Emails may take a moment to hit the inbox, as inbox is a free third-party service.",
+        width="content",
+        text_alignment="left"
+        )
+    st.caption(
+        body="*For best experience, close the inbox tab after viewing email.",
+        width="content",
+        text_alignment="left"
+        )
+
+#################
+# WEBAPP CREATION
+#################
 
 students, grants = loadSeedData()
 
@@ -323,6 +360,22 @@ st.set_page_config(
     initial_sidebar_state="auto",
     menu_items=None
     )
+
+# Caption: https://docs.streamlit.io/develop/api-reference/text/st.caption
+st.caption(
+    body="Rhodes Deep by Ronald Jenkees (w/ permission from artist)",
+    width="stretch",
+    text_alignment="right"
+)
+# Play music: https://docs.streamlit.io/develop/api-reference/media/st.audio
+st.audio(
+    data="audio\\Ronald Jenkees - Rhodes Deep - 01 Rhodes Deep.wav",
+    format="audio/wav",
+    start_time=0,
+    loop=True,
+    autoplay=False,
+    width="stretch"
+)
 
 # https://youtu.be/92jUAXBmZyU?list=TLGGYqrRVqMdT0wxNDAzMjAyNg
 if "page" not in st.session_state:
