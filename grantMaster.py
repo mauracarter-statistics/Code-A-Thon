@@ -4,13 +4,12 @@ import pandas as pd
 import smtplib
 import streamlit as st
 
+# Full Streamlit doc:
+# https://docs.streamlit.io/
+
 ###########
 # FUNCTIONS
 ###########
-
-
-# Full Streamlit doc:
-# https://docs.streamlit.io/
 
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
 @st.cache_data
@@ -345,9 +344,9 @@ def showResultsPage():
         text_alignment="left"
         )
 
-#################
-# WEBAPP CREATION
-#################
+########
+# WEBAPP
+########
 
 students, grants = loadSeedData()
 
