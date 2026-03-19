@@ -19,7 +19,7 @@ def loadSeedData():
     Returns DataFrames as a tuple.
     """
 
-    with open("mock_data/seed_data.json", "r", encoding="UTF-8") as inFile:
+    with open("mock_data/mockData.json", "r", encoding="UTF-8") as inFile:
         data = json.load(inFile)
 
     studentsData = pd.DataFrame(data["students"])
@@ -181,7 +181,7 @@ def showFormPage():
             width="content",
             text_alignment="left"
             )
-        st.write(f"**Financial Class:** {studentDict.get('financial_class', '—')}")
+        st.write(f"**Financial Need:** {studentDict.get('financial_need', '—')}")
         st.write(f"**Race:** {studentDict.get('race', '—')}")
         st.write(f"**Ethnicity:** {studentDict.get('ethnicity', '—')}")
         st.write(f"**Gender:** {studentDict.get('gender', '—')}")
