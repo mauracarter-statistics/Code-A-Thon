@@ -12,13 +12,10 @@ import streamlit as st
 # Full Streamlit doc:
 # https://docs.streamlit.io/
 
-<<<<<<< HEAD
-=======
 ###########
 # FUNCTIONS
 ###########
 
->>>>>>> jd
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
 @st.cache_data
 def loadSeedData():
@@ -342,11 +339,7 @@ def showResultsPage():
     
     if text is not defaultText:
         st.caption(
-<<<<<<< HEAD
-        body="*Emails may take a moment to hit the inbox, as inbox is a free third-party service.",
-=======
         body="*Emails may take a moment to arrive in inbox; inbox is provided by a free third-party service.",
->>>>>>> jd
         width="content",
         text_alignment="left"
         )
@@ -356,15 +349,9 @@ def showResultsPage():
         text_alignment="left"
         )
 
-<<<<<<< HEAD
-#################
-# WEBAPP CREATION
-#################
-=======
 #########
 # WEB APP
 #########
->>>>>>> jd
 
 students, grants = loadSeedData()
 
