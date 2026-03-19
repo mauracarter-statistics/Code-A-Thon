@@ -12,6 +12,10 @@ import streamlit as st
 # Full Streamlit doc:
 # https://docs.streamlit.io/
 
+###########
+# FUNCTIONS
+###########
+
 # https://docs.streamlit.io/develop/api-reference/caching-and-state/st.cache_data
 @st.cache_data
 def loadSeedData():
@@ -107,7 +111,7 @@ def showWelcomePage():
 
     st.divider()
 
-    st.write("Each year, millions of dollars in college grants go unclaimed. This isn't because students don't qualify, but because they never hear about the opportunities.")
+    st.write("Each year, billions of dollars in college grants go unclaimed. This isn't because students don't qualify, but because they never hear about the opportunities.")
     st.write("That's where grantMaster hopes to step in.")
     st.write("grantMaster will use student registration data to automatically search for grants that a student may be eligible for. When possible, it will apply on their behalf.")
     st.write("To use grantMaster, a college signs a data sharing agreement that details how student data is handled. The college also sets up a connection between their existing registration system and grantMaster so that data can be shared.")
@@ -336,6 +340,7 @@ def showResultsPage():
     if text is not defaultText:
         st.caption(
         body="*Emails may take a moment to hit the inbox, as inbox is a free third-party service.",
+        body="*Emails may take a moment to arrive in inbox; inbox is provided by a free third-party service.",
         width="content",
         text_alignment="left"
         )
@@ -348,6 +353,9 @@ def showResultsPage():
 #################
 # WEBAPP CREATION
 #################
+#########
+# WEB APP
+#########
 
 students, grants = loadSeedData()
 
