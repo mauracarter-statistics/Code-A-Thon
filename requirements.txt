@@ -1,4 +1,3 @@
-imghdr
 pandas
 streamlit
 altair<5
