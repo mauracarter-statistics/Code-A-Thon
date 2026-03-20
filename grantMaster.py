@@ -436,8 +436,8 @@ if "page" not in st.session_state:
 page = st.session_state.page
 if page == "welcome":
     showWelcomePage()
-elif page == "about":
-    showTeamPage()
+# elif page == "about":
+#     showTeamPage()
 elif page == "form":
     showFormPage()
 elif page == "results":
