@@ -121,6 +121,13 @@ def showWelcomePage():
         ):
         st.session_state.page = "form"
         st.rerun()
+    
+    if st.button(
+        label="Meet the Team",
+        width="content"
+        ):
+        st.session_state.page = "about"
+        st.rerun()
 
 def showFormPage():
     # Display the "Form" page
@@ -338,10 +345,55 @@ def showResultsPage():
         width="content",
         text_alignment="left"
         )
-    st.caption(
-        body="*For best experience, close the inbox tab after viewing email.",
+        st.caption(
+            body="*For best experience, close the inbox tab after viewing email.",
+            width="content",
+            text_alignment="left"
+            )
+
+def showTeamPage():
+    st.title(
+        body="Meet the Team",
+        anchor=None,
         width="content",
         text_alignment="left"
+    )
+    st.divider()
+    st.subheader(
+        body="Maura Carter",
+        width="content",
+        text_alignment="left"
+        )
+    st.write("info about Maura")
+    st.subheader(
+        body="Jaime Delgado-Guzman",
+        width="content",
+        text_alignment="left"
+    )
+    st.write("info about Jaime")
+    st.subheader(
+        body="David Diza",
+        width="content",
+        text_alignment="left"
+    )
+    st.write("info about David")
+    st.subheader(
+        body="Zoe Ramirez",
+        width="content",
+        text_alignment="left"
+    )
+    st.write("info about zoe")
+    st.divider()
+    if st.button(
+        label="Get Started",
+        width="content"
+        ):
+        st.session_state.page = "form"
+        st.rerun()
+    st.link_button(
+        label="View the Code",
+        url=r"https://github.com/mauracarter-statistics/Code-A-Thon/tree/webApp",
+        width="content"
         )
 
 #########
@@ -384,6 +436,8 @@ if "page" not in st.session_state:
 page = st.session_state.page
 if page == "welcome":
     showWelcomePage()
+elif page == "about":
+    showTeamPage()
 elif page == "form":
     showFormPage()
 elif page == "results":
