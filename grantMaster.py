@@ -23,7 +23,7 @@ def loadStudentData():
         data = json.load(inFile)
     studentsData = pd.DataFrame(data["students"])
     return studentsData
-# f
+
 @st.cache_data
 def loadGrantData():
     with open("mock_data/mockData.json", "r", encoding="UTF-8") as inFile:
