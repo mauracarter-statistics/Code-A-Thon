@@ -4,6 +4,11 @@ import pandas as pd
 import smtplib
 import streamlit as st
 
+###########
+# FUNCTIONS
+###########
+
+
 # Full Streamlit doc:
 # https://docs.streamlit.io/
 
