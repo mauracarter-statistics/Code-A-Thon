@@ -361,7 +361,7 @@ def showTeamPage():
         width="content",
         text_alignment="left"
     )
-    st.markdown("[David](https://www.linkedin.com/in/daviddiza/) is a CPCC Computer Software Developer student, with a background in Java and other programming languages. David was the code reviewer and tester for grantMaster.")
+    st.markdown("[David](https://www.linkedin.com/in/daviddiza/) is a CPCC IT Software Developer student, with a background in Java and other programming languages. David was the code reviewer and tester for grantMaster.")
     st.subheader(
         body="Zoe Ramirez",
         width="content",
